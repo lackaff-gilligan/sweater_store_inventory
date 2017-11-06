@@ -1,0 +1,26 @@
+{
+  "name": "sweater_store_inventory",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lackaff-gilligan/sweater_store_inventory.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lackaff-gilligan/sweater_store_inventory/issues"
+  },
+  "homepage": "https://github.com/lackaff-gilligan/sweater_store_inventory#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "pg": "^7.4.0"
+  }
+}
