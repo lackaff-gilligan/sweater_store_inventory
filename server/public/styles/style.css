@@ -1,0 +1,15 @@
+#pageTitle, #subTitle {
+    font-size: 46px;
+}
+
+#sweaterSubheading {
+    margin-bottom: 30px;
+}
+
+#sweaterNameIn, #sizeIn {
+    margin-right: 10px;
+}
+
+#submitBtn {
+    margin-left: 10px;
+}

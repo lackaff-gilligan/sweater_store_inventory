@@ -16,6 +16,44 @@
 </head>
 <body>
     <div class="container">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-8">
+                        <h1 id="pageTitle">Sweater Weather Boutique</h1>
+                        <h1 id="subTitle"><small>Inventory Tracker</small></h1>
+                </div>
+                <div class="col-md-4">
+                    <img src="http://www.plaidstallions.com/images/familysweater.jpg" 
+                        alt="family-sweater-pic" class="img-thumbnail">
+                    </div>
+            </div>
+        </div> <!--end page-header-->
+            <div class="container">
+                <!--<div class="row">
+                    <div class="col-md-6">-->
+                    <h3 id="sweaterSubheading">Add New Sweater:</h3>
+                    <!--</div>
+                </div>-->
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label class="sr-only" for="sweaterNameIn">Sweater Name</label>
+                        <input type="text" class="form-control" id="sweaterNameIn" placeholder="Sweater Name">
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="sizeIn">Size</label>
+                        <input type="text" class="form-control" id="sizeIn" placeholder="Size">
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="priceIn">Price</label>
+                        <div class="input-group">
+                            <!--<div class="input-group-addon">$</div>-->
+                            <input type="text" class="form-control" id="priceIn" placeholder="Price">
+                            <div class="input-group-addon">.00</div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-default" id="submitBtn">Submit</button>
+                </div>
+            </div>
         
     </div>
 </body>
