@@ -41,7 +41,7 @@ function refreshSweaters(){
         console.log('response from GET req:', response);
         //response is my sweater array
         var sweaterList = response;
-        //appendSweatersToDom(sweaterList);
+        appendSweatersToDom(sweaterList);
     }).fail(function(error){
         console.log('something went wrong in GET req:', error); 
     })
@@ -68,3 +68,18 @@ function addNewSweater(sweaterToSend) {
 // function editBtnClicked(){
 
 // }
+
+function appendSweatersToDom(arrOfSweaters){
+    for(var i = 0; i < arrOfSweaters.length; i += 1){
+        var sweater = arrOfSweaters[i];
+      var $tr = $('<tr></tr>');
+      $tr.data('sweater', sweater);
+      $tr.append('<td>' + sweater.name + '</td>');
+      $tr.append('<td>' + sweater.size + '</td>');
+      $tr.append('<td>' + sweater.price + '</td>');
+      $tr.append('<td><button data-id="' + sweater.id + '" class="btn btn-info editBtn">Edit</button></td>');
+      $tr.append('<td><button data-id="' + sweater.id + '" class="btn btn-danger deleteBtn">Delete</button></td>');
+      //add row to tbody on DOM
+      $('#sweaterList').append($tr);
+    }
+}
