@@ -47,10 +47,22 @@ function refreshSweaters(){
     })
 }
 
-// PUT request for existing sweater
-// function updateSweater(sweaterToUpdate) {
-//     $.ajax({});
-// }
+// PUT request to update an existing sweater
+function updateSweater(sweaterToUpdate) {
+    //editingId is a global variable so it is now whatever was assigned in editBtnClicked()
+    console.log('Update sweater with id:', editingId, sweaterToUpdate);
+    
+    $.ajax({
+        method: 'PUT',
+        url: '/sweater/' + editingId, //req.params
+        data: sweaterToUpdate //req.body
+    }).done(function(response){
+        console.log('response from PUT request:', response);
+        refreshSweaters();
+    }).fail(function(error){
+        console.log('Error making PUT request:', error);
+    });
+}
 
 // POST request for a new sweater
 function addNewSweater(sweaterToSend) {
@@ -70,7 +82,7 @@ function editBtnClicked(){
     //switch to editing mode
   editing = true;
   $('#sweaterSubheading').text('Editing Sweater:');
-  // store the specific sweater's id
+  // store the specific sweater's id in the global variable
   editingId = $(this).data('id');
   console.log('edit button clicked with editingID:', editingId);
   // store the specific sweater to be updated (.data() was set in appendSweatersToDom())
@@ -83,8 +95,10 @@ function editBtnClicked(){
 }
 
 function appendSweatersToDom(arrOfSweaters){
+    $('#sweaterList').empty();
+    //loop through arrOfSweaters and append to DOM
     for(var i = 0; i < arrOfSweaters.length; i += 1){
-        var sweater = arrOfSweaters[i];
+      var sweater = arrOfSweaters[i];
       var $tr = $('<tr></tr>');
       $tr.data('sweater', sweater);
       $tr.append('<td>' + sweater.name + '</td>');

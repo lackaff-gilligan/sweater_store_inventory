@@ -68,4 +68,36 @@ router.get('/', function(req, res){
    }); //END POOL
 }); //END GET ROUTE
 
+
+// PUT ROUTE
+router.put('/:id', function(req, res){
+   console.log('req.params in PUT route:', req.params);
+   var sweaterId = req.params.id;
+   var sweater = req.body;
+   console.log('req.body now sweater:', sweater);
+    
+    //Attempt to connect to the database
+    pool.connect(function (errorConnectingToDb, db, done){
+        if(errorConnectingToDb){
+            //there was an error and no connection was made
+            console.log('Error connecting to db:', errorConnectingToDb);
+            res.sendStatus(500);
+        } else {
+            //we connected to the db!! pool -1
+            var queryText = 'UPDATE "sweaters" SET "name" = $1, "size" = $2, "price" = $3 WHERE "id" = $4;';
+            db.query(queryText, [sweater.name, sweater.size, sweater.price, sweaterId], function (errorMakingQuery, result){
+                //we have received an error or result at this point
+                done(); //pool +1
+                if(errorMakingQuery){
+                    console.log('Error making query', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    //send back success!!
+                    res.sendStatus(201);
+                }
+            }); // END QUERY
+        }
+    }); // END POOL
+})
+
 module.exports = router;
