@@ -14,7 +14,7 @@ var config = {
 //create pool
 var pool = new pg.Pool(config);
 
-//express removed the '/sweater' when I do an app.use
+//express removed the '/sweater' when it does an app.use
 router.post('/', function(req, res){
     var sweater = req.body; //the data sent in the POST request
     console.log('req.body now sweater:', sweater); //has a name, size, price
@@ -42,5 +42,30 @@ router.post('/', function(req, res){
         }
     }); // END POOL
 });
+
+// http://localhost:5000/sweater will go here
+router.get('/', function(req, res){
+   //attempt to connect to the database
+   pool.connect(function(errorConnectingToDb, db, done){
+       if(errorConnectingToDb){
+           //There was an error and no connection was made
+           console.log('Error connecting:', errorConnectingToDb);
+           res.sendStatus(500);
+       } else {
+           //successful connection to db!! pool -1
+           var queryText = 'SELECT * FROM "sweaters" ORDER BY "id" ASC;';
+           db.query(queryText, function(errorMakingQuery, result){
+               //we have received an error or result at this point
+               done(); //pool + 1
+               if(errorMakingQuery){
+                   console.log('Error making query:', errorMakingQuery);
+                   res.sendStatus(500);
+               } else {
+                   res.send(result.rows);
+               }
+           }); //END QUERY
+       }
+   }); //END POOL
+}); //END GET ROUTE
 
 module.exports = router;
