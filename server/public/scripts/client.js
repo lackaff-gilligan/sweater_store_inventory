@@ -7,7 +7,7 @@ var editingId;
 function onReady(){
     refreshSweaters();
     $('#submitBtn').on('click', submitBtnClicked);
-    //$('#sweaterList').on('click', '.editBtn', editBtnClicked);
+    $('#sweaterList').on('click', '.editBtn', editBtnClicked);
 }
 
 function submitBtnClicked(){
@@ -47,11 +47,12 @@ function refreshSweaters(){
     })
 }
 
+// PUT request for existing sweater
 // function updateSweater(sweaterToUpdate) {
-
+//     $.ajax({});
 // }
 
-// POST a new sweater
+// POST request for a new sweater
 function addNewSweater(sweaterToSend) {
    $.ajax({
        method: 'POST',
@@ -65,9 +66,21 @@ function addNewSweater(sweaterToSend) {
    });
 }
 
-// function editBtnClicked(){
-
-// }
+function editBtnClicked(){
+    //switch to editing mode
+  editing = true;
+  $('#sweaterSubheading').text('Editing Sweater:');
+  // store the specific sweater's id
+  editingId = $(this).data('id');
+  console.log('edit button clicked with editingID:', editingId);
+  // store the specific sweater to be updated (.data() was set in appendSweatersToDom())
+  var editSweater = $(this).closest('tr').data('sweater');
+  console.log('editSweater: ', editSweater);
+  //populate input fields with the sweater to be edited
+  $('#sweaterNameIn').val(editSweater.name);
+  $('#sizeIn').val(editSweater.size);
+  $('#priceIn').val(editSweater.price);
+}
 
 function appendSweatersToDom(arrOfSweaters){
     for(var i = 0; i < arrOfSweaters.length; i += 1){
