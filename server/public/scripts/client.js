@@ -8,6 +8,7 @@ function onReady(){
     refreshSweaters();
     $('#submitBtn').on('click', submitBtnClicked);
     $('#sweaterList').on('click', '.editBtn', editBtnClicked);
+    $('#sweaterList').on('click', '.deleteBtn', deleteBtnClicked);
 }
 
 function submitBtnClicked(){
@@ -92,6 +93,23 @@ function editBtnClicked(){
   $('#sweaterNameIn').val(editSweater.name);
   $('#sizeIn').val(editSweater.size);
   $('#priceIn').val(editSweater.price);
+}
+
+function deleteBtnClicked(){
+  var sweaterDelete = $(this).closest('tr').data('sweater');
+  var deleteId = sweaterDelete.id;
+  console.log('sweaterDelete:', sweaterDelete);
+  console.log('sweaterDelete.id:', sweaterDelete.id);
+  //DELETE REQUEST
+  $.ajax({
+      method: 'DELETE',
+      url: '/sweater/' + deleteId
+  }).done(function(response) {
+      console.log('response from DELETE request:', response);
+      refreshSweaters();
+  }).fail(function(error){
+      console.log('error in Delete request:', error);
+  })
 }
 
 function appendSweatersToDom(arrOfSweaters){

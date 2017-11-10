@@ -53,7 +53,7 @@ router.get('/', function(req, res){
            res.sendStatus(500);
        } else {
            //successful connection to db!! pool -1
-           var queryText = 'SELECT * FROM "sweaters" ORDER BY "id" ASC;';
+           var queryText = 'SELECT * FROM "sweaters" ORDER BY "id" DESC;';
            db.query(queryText, function(errorMakingQuery, result){
                //we have received an error or result at this point
                done(); //pool + 1
@@ -69,31 +69,31 @@ router.get('/', function(req, res){
 }); //END GET ROUTE
 
 //GET ROUTE for a single sweater
-router.get('/:sid', function(req, res){
-    // sweater/3 will assign req.params.sid = 3
-    var sweaterId = req.params.sid;
-    //attempt to connect to the database
-    pool.connect(function(errorConnectingToDb, db, done){
-        if(errorConnectingToDb){
-            //There was an error and no connection was made
-            console.log('Error connecting:', errorConnectingToDb);
-            res.sendStatus(500);
-        } else {
-            //successful connection to db!! pool -1
-            var queryText = 'SELECT * FROM "sweaters" WHERE "id" = $1;';
-            db.query(queryText, [sweaterId], function(errorMakingQuery, result){
-                //we have received an error or result at this point
-                done(); //pool + 1
-                if(errorMakingQuery){
-                    console.log('Error making query:', errorMakingQuery);
-                    res.sendStatus(500);
-                } else {
-                    res.send(result.rows);
-                }
-            }); //END QUERY
-        }
-    }); //END POOL
- }); //END GET ROUTE
+// router.get('/:sid', function(req, res){
+//     // sweater/3 will assign req.params.sid = 3
+//     var sweaterId = req.params.sid;
+//     //attempt to connect to the database
+//     pool.connect(function(errorConnectingToDb, db, done){
+//         if(errorConnectingToDb){
+//             //There was an error and no connection was made
+//             console.log('Error connecting:', errorConnectingToDb);
+//             res.sendStatus(500);
+//         } else {
+//             //successful connection to db!! pool -1
+//             var queryText = 'SELECT * FROM "sweaters" WHERE "id" = $1;';
+//             db.query(queryText, [sweaterId], function(errorMakingQuery, result){
+//                 //we have received an error or result at this point
+//                 done(); //pool + 1
+//                 if(errorMakingQuery){
+//                     console.log('Error making query:', errorMakingQuery);
+//                     res.sendStatus(500);
+//                 } else {
+//                     res.send(result.rows);
+//                 }
+//             }); //END QUERY
+//         }
+//     }); //END POOL
+//  }); //END GET ROUTE
 
 
 // PUT ROUTE
@@ -125,6 +125,33 @@ router.put('/:id', function(req, res){
             }); // END QUERY
         }
     }); // END POOL
-})
+});
+
+//DELETE ROUTE
+router.delete('/:id', function(req, res){
+    // sweater/3 will assign req.params.id = 3
+    var sweaterId = req.params.id;
+    //attempt to connect to the database
+    pool.connect(function(errorConnectingToDb, db, done){
+        if(errorConnectingToDb){
+            //There was an error and no connection was made
+            console.log('Error connecting:', errorConnectingToDb);
+            res.sendStatus(500);
+        } else {
+            //successful connection to db!! pool -1
+            var queryText = 'DELETE FROM "sweaters" WHERE "id" = $1;';
+            db.query(queryText, [sweaterId], function(errorMakingQuery, result){
+                //we have received an error or result at this point
+                done(); //pool + 1
+                if(errorMakingQuery){
+                    console.log('Error making query:', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.send(result.rows);
+                }
+            }); //END QUERY
+        }
+    }); //END POOL
+ }); //END DELETE ROUTE
 
 module.exports = router;
